@@ -1,7 +1,6 @@
 import { request, gql } from 'graphql-request'
-const graphqlAPI = process.env.GRAPHCMS_API_ENDPOINT
-
-console.log(graphqlAPI)
+const graphqlAPI =
+  'https://api-sa-east-1.graphcms.com/v2/ckzbn386h2n6q01z64qwbgze7/master'
 
 export const getPosts = async () => {
   const query = gql`
@@ -40,11 +39,8 @@ export const getPosts = async () => {
 
 export const getRecentPosts = async () => {
   const query = gql`
-    query GetPostDetails() {
-      posts(
-        orderBy: createdAt_ASC
-        last: 3
-      ) {
+    query GetPostDetails {
+      posts(orderBy: createdAt_ASC, last: 3) {
         title
         featuredImage {
           url
@@ -54,8 +50,8 @@ export const getRecentPosts = async () => {
       }
     }
   `
-  const result = await request(graphqlAPI, query)
 
+  const result = await request(graphqlAPI, query)
   return result.posts
 }
 
